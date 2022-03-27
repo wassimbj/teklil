@@ -15,7 +15,7 @@ class User {
       data.points = rows[0].points;
       data.id = rows[0].id;
     }
-
+    console.log(data);
     return res.status(200).json(data);
   }
 
