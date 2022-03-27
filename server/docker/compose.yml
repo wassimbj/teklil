@@ -1,0 +1,77 @@
+version: "3"
+
+services:
+  pg_db:
+    image: postgres:13
+    container_name: trasty_db
+    env_file: ../.env
+    restart: unless-stopped
+    volumes:
+      - ../sql-data:/docker-entrypoint-initdb.d
+      - trasty_app_db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - trasty_db_nw
+
+  redis:
+    image: redis
+    restart: unless-stopped
+    volumes:
+      - trasty_app_redis:/data
+    command: redis-server
+    ports:
+      - 5698:6379
+    networks:
+      - trasty_web_nw
+
+  nginx:
+    image: nginx:latest
+    container_name: trasty_nginx
+    restart: unless-stopped
+    volumes:
+      - ../cfg/nginx.dev.conf:/etc/nginx/nginx.conf
+    ports:
+      - 5000:80
+    networks:
+      - trasty_web_nw
+    depends_on:
+      - app_server
+
+  app_server:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile.server
+    restart: unless-stopped
+    env_file: ../.env
+    volumes:
+      - ..:/trasty/app
+    depends_on:
+      - "pg_db"
+      - "redis"
+    ports:
+      - 9999
+    networks:
+      - trasty_db_nw
+      - trasty_web_nw
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    container_name: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: pg_db
+    networks:
+      - trasty_db_nw
+
+networks:
+  trasty_db_nw:
+    driver: bridge
+  trasty_web_nw:
+    driver: bridge
+
+volumes:
+  trasty_app_db:
+  trasty_app_redis:

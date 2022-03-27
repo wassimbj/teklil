@@ -1,0 +1,44 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "trasty api",
+  "main": "app.js",
+  "scripts": {
+    "start": "node -r esm ./www/index.js --reload",
+    "test": "set TESTING=true && jest"
+  },
+  "author": "wassimbj",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bull": "^3.29.3",
+    "cloudinary": "^1.23.0",
+    "connect-redis": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.7.0",
+    "helmet": "^4.2.0",
+    "ioredis": "^4.19.2",
+    "multer": "^1.4.4",
+    "nanoid": "^3.1.20",
+    "node-schedule": "^2.0.0",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth2": "^0.2.0",
+    "pg": "^8.5.1",
+    "scrape-it": "^5.2.4",
+    "socket.io": "^3.1.0",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.4",
+    "@types/bull": "^3.15.2",
+    "babel-jest": "^27.3.1",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6"
+  }
+}

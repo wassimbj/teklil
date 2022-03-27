@@ -1,0 +1,7 @@
+/node_modules
+# /public
+/docker-dev-data
+
+/logs
+.env
+.git
