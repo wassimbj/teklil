@@ -45,10 +45,11 @@ class Post {
     try {
       const { id } = req.body;
       const userId = req.session.userid;
-      await db.query("DELETE FROM posts WHERE id = $1", [id]);
+      console.log(userId)
       await db.query("UPDATE users SET points = points + 1 WHERE id = $1", [
         userId,
       ]);
+      await db.query("DELETE FROM posts WHERE id = $1", [id]);
 
       return res.status(200).json("Good");
     } catch (err) {

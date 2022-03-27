@@ -7,15 +7,16 @@ import logger from "../../../utils/logger";
 class User {
   async me(req, res) {
     let { rows } = await db.query(
-      "SELECT id, points FROM users WHERE id = $1",
+      "SELECT id, points, fullname FROM users WHERE id = $1",
       [req.session.userid]
     );
     let data = {};
     if (rows.length > 0) {
       data.points = rows[0].points;
+      data.fullname = rows[0].fullname;
       data.id = rows[0].id;
     }
-    console.log(data);
+
     return res.status(200).json(data);
   }
 
